@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101015">
+<title>EA Social Assistant</title>
+<style>
+:root{color-scheme:dark;--bg:#0d0d12;--panel:#15151d;--panel2:#1b1b25;--line:#2b2b38;--text:#f4f3fa;--muted:#a5a3b5;--accent:#c6ff5e;--accent2:#a4dc3f;--pink:#ff7bba}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 85% -10%,#25243c 0,transparent 40%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}.app{max-width:1180px;margin:auto;padding:24px 22px 50px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-bottom:26px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;display:grid;place-items:center;background:var(--accent);color:#101015;border-radius:13px;font-weight:950;letter-spacing:-2px;font-size:18px}.brand h1{font-size:17px;line-height:1.2;margin:0;letter-spacing:-.4px}.brand p{margin:4px 0 0;color:var(--muted);font-size:12px}
+.status{border:1px solid #414151;border-radius:999px;padding:7px 11px;color:var(--muted);font-size:12px;display:flex;align-items:center;gap:7px}.dot{width:7px;height:7px;background:#e4b85d;border-radius:50%}
+.hero{padding:38px 0 25px;max-width:740px}.eyebrow{color:var(--accent);text-transform:uppercase;letter-spacing:2px;font-size:11px;font-weight:800}.hero h2{font-size:clamp(32px,5vw,48px);letter-spacing:-1.9px;line-height:1.04;margin:12px 0}.hero p{color:var(--muted);margin:0;max-width:610px}
+.searchbox{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:15px;display:flex;gap:10px;box-shadow:0 20px 70px #0003}.searchfield{flex:1;display:flex;align-items:center;gap:9px;background:#0f0f15;border:1px solid #343443;border-radius:12px;padding:0 13px;min-width:0}.hash{color:var(--accent);font-size:20px;font-weight:800}.searchfield input{background:transparent;border:0;outline:0;color:var(--text);width:100%;min-width:0;padding:14px 0}.primary{background:var(--accent);color:#11120d;border:0;border-radius:12px;padding:0 21px;font-weight:850;white-space:nowrap}.primary:hover{background:#d7ff91}.primary:disabled{opacity:.5;cursor:wait}
+.quicktags{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.tag{border:1px solid var(--line);background:#14141b;color:#c6c4d3;border-radius:999px;padding:6px 11px;font-size:12px}.tag:hover{border-color:var(--accent);color:var(--accent)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:25px 0}.stat{border:1px solid var(--line);background:#121219b8;border-radius:15px;padding:16px}.stat .label{font-size:12px;color:var(--muted)}.stat .value{font-size:23px;font-weight:800;letter-spacing:-.6px;margin-top:5px}.stat .sub{font-size:11px;color:#858397;margin-top:3px}
+.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:14px;margin:30px 0 13px}.sectionhead h3{margin:0;font-size:19px;letter-spacing:-.5px}.sectionhead p{margin:4px 0 0;color:var(--muted);font-size:12px}.filters{display:flex;gap:8px;flex-wrap:wrap}.filters select{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px;color:var(--text);font-size:12px}
+.notice{border:1px solid #51472a;background:#282315;border-radius:14px;padding:15px 16px;color:#e6d8ac;font-size:13px;display:flex;gap:11px;align-items:flex-start;margin-top:20px}.notice strong{display:block;color:#fff0bd;margin-bottom:2px}.notice .icon{font-size:18px}
+.empty{border:1px dashed #393846;background:#1212199c;border-radius:18px;padding:40px 20px;text-align:center}.emptyicon{margin:0 auto 12px;width:48px;height:48px;border-radius:15px;background:#22222e;display:grid;place-items:center;font-size:22px}.empty h4{margin:0 0 7px;font-size:17px}.empty p{max-width:470px;margin:0 auto;color:var(--muted);font-size:13px}.empty .small{margin-top:16px;color:#777589;font-size:11px}
+.results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.post{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--panel)}.post .thumb{height:160px;background:linear-gradient(135deg,#242437,#181822);display:grid;place-items:center;color:#85839a;font-size:12px}.post .body{padding:13px}.post .user{font-weight:750;font-size:13px}.post .caption{color:var(--muted);font-size:12px;margin:7px 0 12px}.post .actions{display:flex;gap:8px}.post a,.post button{flex:1;text-align:center;padding:8px;border-radius:9px;font-size:11px;text-decoration:none}.post a{background:var(--accent);color:#14150f;font-weight:800}.post button{border:1px solid var(--line);background:transparent;color:var(--text)}
+.savedbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:30px;padding:14px 16px;background:var(--panel);border:1px solid var(--line);border-radius:14px}.savedbar strong{font-size:13px}.savedbar span{font-size:12px;color:var(--muted)}.ghost{border:1px solid var(--line);background:transparent;color:var(--text);border-radius:9px;padding:8px 11px;font-size:12px}
+footer{margin-top:35px;border-top:1px solid var(--line);padding-top:18px;color:#777589;font-size:11px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);max-width:calc(100% - 30px);background:#f4f3fa;color:#111;padding:12px 16px;border-radius:12px;font-size:13px;box-shadow:0 10px 40px #0008;display:none;z-index:5}
+@media(max-width:760px){.app{padding:17px 14px 35px}.topbar{padding-bottom:18px}.hero{padding-top:30px}.searchbox{flex-direction:column}.primary{padding:13px}.stats{gap:8px}.stat{padding:12px}.stat .value{font-size:20px}.sectionhead{align-items:flex-start;flex-direction:column}.results{grid-template-columns:repeat(2,minmax(0,1fr))}.post .thumb{height:125px}}
+@media(max-width:450px){.status{font-size:0;padding:10px}.status .dot{width:8px;height:8px}.stats{grid-template-columns:1fr 1fr}.stat:last-child{grid-column:span 2}.results{grid-template-columns:1fr}.post .thumb{height:145px}.savedbar{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><div class="logo">EA</div><div><h1>EA Social Assistant</h1><p>Instagram content discovery</p></div></div>
+    <div class="status"><span class="dot"></span><span id="statusText">API not connected</span></div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="eyebrow">Discover · Review · Save</div>
+      <h2>Find your next<br>creative connection.</h2>
+      <p>Search public Instagram posts by hashtag, review relevant content, and save posts to revisit later. You stay in control of every interaction.</p>
+    </section>
+    <form id="searchForm" class="searchbox">
+      <label class="searchfield"><span class="hash">#</span><input id="hashtag" aria-label="Hashtag" placeholder="try futurehouse" maxlength="100" autocomplete="off" required></label>
+      <button class="primary" id="searchButton" type="submit">Search hashtags ↗</button>
+    </form>
+    <div class="quicktags" aria-label="Suggested hashtags">
+      <button class="tag" type="button" data-tag="futurehouse">#futurehouse</button>
+      <button class="tag" type="button" data-tag="drumandbass">#drumandbass</button>
+      <button class="tag" type="button" data-tag="progressivetrance">#progressivetrance</button>
+      <button class="tag" type="button" data-tag="indiemusic">#indiemusic</button>
+      <button class="tag" type="button" data-tag="musicproducer">#musicproducer</button>
+    </div>
+    <section class="stats" aria-label="Dashboard stats">
+      <div class="stat"><div class="label">Searches this session</div><div class="value" id="searchCount">0</div><div class="sub">Your discovery activity</div></div>
+      <div class="stat"><div class="label">Saved posts</div><div class="value" id="savedCount">0</div><div class="sub">Stored on this device</div></div>
+      <div class="stat"><div class="label">Connection</div><div class="value" id="connectionValue" style="font-size:17px">Not connected</div><div class="sub">Official Meta API required</div></div>
+    </section>
+    <div class="sectionhead">
+      <div><h3 id="resultsTitle">Your discovery feed</h3><p id="resultsSubtitle">Search a hashtag to begin. Live results appear after API setup.</p></div>
+      <div class="filters"><select id="viewFilter" aria-label="View"><option value="latest">Latest search</option><option value="saved">Saved posts</option></select><select id="sortFilter" aria-label="Sort"><option value="newest">Newest first</option><option value="oldest">Oldest first</option></select></div>
+    </div>
+    <div id="resultsArea">
+      <div class="empty"><div class="emptyicon">⌕</div><h4>Ready when you are</h4><p>Enter a hashtag above. This dashboard will show real public posts only when the official Meta API backend is connected and authorized.</p><div class="small">No sample posts are shown as real results.</div></div>
+    </div>
+    <div class="notice"><div class="icon">ⓘ</div><div><strong>Setup status: dashboard starter</strong>This interface is ready to customize, but Instagram search is not connected yet. Meta API access, a server-side access token, and the required permissions are needed for live results. Never paste your access token into this page.</div></div>
+    <div class="savedbar"><div><strong>Saved for later</strong><br><span id="savedSummary">Your saved posts stay in this browser on this device.</span></div><button class="ghost" id="exportSaved" type="button">Export saved list</button></div>
+  </main>
+  <footer><span>EA Social Assistant · Private discovery workspace</span><span>Public content only · Manual engagement only</span></footer>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+const $ = s => document.querySelector(s);
+let searches = 0, currentPosts = [], saved = JSON.parse(localStorage.getItem('eaSavedPosts') || '[]');
+const toast = msg => { const t=$('#toast'); t.textContent=msg; t.style.display='block'; clearTimeout(window.__toastTimer); window.__toastTimer=setTimeout(()=>t.style.display='none',3000); };
+const cleanTag = v => v.trim().replace(/^#+/,'').replace(/[^a-zA-Z0-9._]/g,'');
+function updateStats(){ $('#searchCount').textContent=searches; $('#savedCount').textContent=saved.length; $('#savedSummary').textContent=saved.length ? `${saved.length} saved post${saved.length===1?'':'s'} stored in this browser.` : 'Your saved posts stay in this browser on this device.'; }
+function escapeHtml(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function render(){
+ let list=$('#viewFilter').value==='saved' ? [...saved] : [...currentPosts];
+ list.sort((a,b)=>$('#sortFilter').value==='oldest' ? new Date(a.timestamp||0)-new Date(b.timestamp||0) : new Date(b.timestamp||0)-new Date(a.timestamp||0));
+ $('#resultsTitle').textContent=$('#viewFilter').value==='saved'?'Saved posts':(currentPosts.length?`Results for #${escapeHtml($('#hashtag').value)}`:'Your discovery feed');
+ $('#resultsSubtitle').textContent=list.length?`${list.length} post${list.length===1?'':'s'} shown`:'No posts to display';
+ if(!list.length){$('#resultsArea').innerHTML=`<div class="empty"><div class="emptyicon">${$('#viewFilter').value==='saved'?'♡':'⌕'}</div><h4>${$('#viewFilter').value==='saved'?'Nothing saved yet':'No results yet'}</h4><p>${$('#viewFilter').value==='saved'?'Save a post from a live search to keep it here.':'Search a hashtag after the official Meta API backend is connected.'}</p></div>`;return;}
+ $('#resultsArea').innerHTML='<div class="results">'+list.map(p=>`<article class="post"><div class="thumb">${p.media_url?`<img src="${escapeHtml(p.media_url)}" alt="" style="width:100%;height:100%;object-fit:cover">`:'Public Instagram post'}</div><div class="body"><div class="user">@${escapeHtml(p.username||'instagram_user')}</div><div class="caption">${escapeHtml((p.caption||'No caption provided').slice(0,180))}</div><div class="actions"><a href="${escapeHtml(p.permalink||'#')}" target="_blank" rel="noopener noreferrer">Open post ↗</a><button type="button" data-save="${escapeHtml(p.id)}">${saved.some(s=>s.id===p.id)?'Saved ✓':'Save ♡'}</button></div></div></article>`).join('')+'</div>';
+ document.querySelectorAll('[data-save]').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.save;const p=currentPosts.find(x=>x.id===id)||saved.find(x=>x.id===id);if(!p)return;if(saved.some(x=>x.id===id)){saved=saved.filter(x=>x.id!==id);toast('Removed from saved posts.')}else{saved.unshift(p);toast('Post saved on this device.')}localStorage.setItem('eaSavedPosts',JSON.stringify(saved));updateStats();render();}));
+}
+async function search(tag){
+ tag=cleanTag(tag);if(!tag){toast('Enter a hashtag first.');return;}
+ $('#hashtag').value=tag;$('#viewFilter').value='latest';$('#searchButton').disabled=true;$('#searchButton').textContent='Searching…';
+ try{
+   const response=await fetch(`/api/search?hashtag=${encodeURIComponent(tag)}`,{headers:{'Accept':'application/json'}});
+   if(!response.ok) throw new Error(response.status===404?'API backend is not installed yet.':'Search failed. Check the API setup.');
+   const data=await response.json();if(!Array.isArray(data.posts))throw new Error(data.error||'Unexpected API response.');
+   currentPosts=data.posts;searches++;$('#statusText').textContent='API connected';$('#connectionValue').textContent='Connected';render();updateStats();
+   if(!currentPosts.length)toast('No posts were returned for this hashtag.');
+ }catch(e){toast(e.message==='Failed to fetch'?'No server connection yet. Dashboard UI is ready; API setup comes next.':e.message);$('#statusText').textContent='API not connected';$('#connectionValue').textContent='Not connected';}
+ finally{$('#searchButton').disabled=false;$('#searchButton').textContent='Search hashtags ↗';}
+}
+$('#searchForm').addEventListener('submit',e=>{e.preventDefault();search($('#hashtag').value);});
+document.querySelectorAll('[data-tag]').forEach(b=>b.addEventListener('click',()=>{ $('#hashtag').value=b.dataset.tag; search(b.dataset.tag); }));
+$('#viewFilter').addEventListener('change',render);$('#sortFilter').addEventListener('change',render);
+$('#exportSaved').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(saved,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='ea-social-assistant-saved-posts.json';a.click();URL.revokeObjectURL(url);toast('Saved list exported.');});
+updateStats();
+</script>
+</body>
+</html>
